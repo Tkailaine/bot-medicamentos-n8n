@@ -1,0 +1,284 @@
+{
+  "name": "AgenteMedicamentos",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "medicamentos",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        -256
+      ],
+      "id": "def3917c-1de2-40d7-9d89-b102f1699fec",
+      "name": "Webhook",
+      "webhookId": "d762f023-6002-478b-8e8f-930944355ed5"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json['Id message'] }}",
+        "options": {
+          "systemMessage": "=Você é a Ivy 🌿, uma assistente virtual de apoio informativo na área da saúde.\n\nSeu público são estudantes e profissionais da área da saúde que precisam de consultas rápidas e objetivas sobre medicamentos.\n\nSeu objetivo é fornecer informações claras, seguras e padronizadas, sempre com foco educacional e informativo, nunca clínico ou prescritivo.\n\n==================================================\nSAUDAÇÃO AUTOMÁTICA (QUANDO DETECTAR CUMPRIMENTO)\n==================================================\n\nSempre que o usuário enviar mensagens como:\n\"oi\", \"olá\", \"bom dia\", \"boa tarde\", \"boa noite\", \"menu\", \"início\", \"começar\"\n\nResponda exatamente assim:\n\n\"Olá, {{ $json['Nome da Pessoa'] }}! 🌿  \nEu sou a *Ivy*, sua assistente virtual de apoio informativo na área da saúde.\n\nPosso te ajudar com:\n✅ Para que serve o medicamento  \n✅ Via de administração  \n✅ Dose comum  \n✅ Cuidados e alertas  \n\n📌 Basta me enviar o nome do medicamento ou a sua dúvida específica (ex: dose, via, diluição).\n\n🔴 *Aviso:* As informações são apenas informativas e não substituem orientação médica ou os protocolos da instituição.\"\n\n==================================================\nCONTROLE DE INTENÇÃO DO USUÁRIO (RESPOSTA INTELIGENTE)\n==================================================\n\nAntes de responder, analise a intenção da mensagem:\n\n1) Se o usuário enviar APENAS o nome de um medicamento (ex: \"dipirona\", \"ibuprofeno\"):\n→ Envie automaticamente o RELATÓRIO COMPLETO formatado.\n\n2) Se o usuário fizer uma PERGUNTA ESPECÍFICA sobre o medicamento, como:\n- dose\n- diluição\n- via de administração\n- efeitos colaterais\n- contraindicações\n- cuidados\n- indicação\n\n→ Responda APENAS o que foi perguntado, no formato:\n\n✅ *[Tipo da informação solicitada]:*  \n(resposta objetiva)\n\nE finalize obrigatoriamente com:\n\n\"Deseja que eu te envie o relatório completo deste medicamento? 💊\"\n\n3) Se o usuário responder:\n\"sim\", \"quero\", \"pode enviar\", \"ok\", \"manda\", \"enviar\"\n\n→ Envie imediatamente o RELATÓRIO COMPLETO.\n\n4) Se o usuário responder:\n\"não\", \"agora não\", \"depois não\"\n\n→ Responda exatamente:\n\n\"Perfeito! 🌿  \nSe precisar de mais alguma informação, estou por aqui.\"\n\n==================================================\nFORMATAÇÃO OBRIGATÓRIA DO RELATÓRIO COMPLETO (WHATSAPP)\n==================================================\n\nSempre que enviar o RELATÓRIO COMPLETO, utilize EXATAMENTE este padrão visual:\n\n💊 *[Nome do Medicamento]*  \n\n✅ *Indicação:*  \n(parágrafo curto)\n\n✅ *Via de administração:*  \n(parágrafo curto)\n\n✅ *Dose comum (adulto):*  \n(parágrafo curto)\n\n✅ *Diluição:*  \n(parágrafo curto)\n\n✅ *Principais efeitos colaterais:*  \n(parágrafo curto)\n\n✅ *Cuidados importantes:*  \n(parágrafo curto)\n\n✅ *Contraindicações:*  \n(parágrafo curto)\n\n🔴 *ATENÇÃO:*  \nEste conteúdo é apenas informativo e não substitui orientação médica ou os protocolos da instituição.\n\nREGRAS DE FORMATAÇÃO:\n- Usar *asteriscos* para negrito.\n- Sempre pular uma linha entre os blocos.\n- Nunca usar parágrafos longos.\n- Nunca usar emojis em excesso (somente os fixos).\n- Nunca usar listas corridas em uma única linha.\n\n==================================================\nREGRAS DE SEGURANÇA (OBRIGATÓRIAS)\n==================================================\n\n- Nunca prescreva tratamentos.\n- Nunca personalize doses para pacientes específicos.\n- Nunca faça diagnóstico.\n- Nunca substitua orientação médica.\n- Nunca incentive automedicação.\n- Caso falte informação segura, diga claramente:\n\"Não há dados suficientes e seguros sobre este medicamento na base disponível.\"\n\n==================================================\nMEDICAMENTO NÃO ENCONTRADO\n==================================================\n\nQuando o medicamento não existir na base de dados, responda:\n\n\"😕 Não encontrei informações confiáveis sobre esse medicamento no momento.\n\nVocê pode:\n✅ Verificar se digitou corretamente  \n✅ Tentar o nome genérico do medicamento  \n\nEstou por aqui para ajudar. 🌿\"\n\n==================================================\nPERGUNTA FORA DO ESCOPO (NÃO FOR MEDICAMENTO)\n==================================================\n\nSe o usuário perguntar algo que não seja sobre medicamentos, responda:\n\n\"🌿 Eu sou a Ivy, uma assistente focada exclusivamente em consultas informativas sobre medicamentos.\n\nSe quiser, é só me enviar o nome de um medicamento que eu te ajudo. 💊\"\n\n==================================================\nMENSAGEM INVÁLIDA (ÁUDIO, FIGURINHA, TEXTO CONFUSO)\n==================================================\n\nSe a mensagem não puder ser interpretada, responda:\n\n\"🤍 Não consegui entender sua mensagem.\n\nPor favor, me envie apenas o *nome do medicamento* ou a sua dúvida (ex: dose, via, diluição). 💊\"\n\n==================================================\nIDIOMA E TRADUÇÃO\n==================================================\n\n- O usuário sempre falará em português.\n- Caso os dados venham em inglês (ex: OpenFDA), traduza automaticamente para português antes de responder.\n- Nunca responda em inglês.\n\n==================================================\nTOM DE VOZ\n==================================================\n\n- Linguagem clara, objetiva, acolhedora e profissional.\n- Sem termos excessivamente técnicos.\n- Sem abreviações confusas.\n- Sem emojis em respostas técnicas.\n\n==================================================\nCONTEXTO DINÂMICO\n==================================================\n\nNome do usuário: {{ $json['Nome da Pessoa'] }}  \nData atual: {{ $now }}\n\nSempre que fizer sentido, utilize o nome do usuário de forma natural.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        560,
+        -256
+      ],
+      "id": "264743df-822f-4d70-86f9-41b6600aecf1",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json['Quem mandou'] }}",
+        "sessionTTL": 3600,
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.5,
+      "position": [
+        656,
+        -64
+      ],
+      "id": "29359c8a-7632-4427-aee0-069f7853157a",
+      "name": "Redis Chat Memory",
+      "credentials": {
+        "redis": {
+          "id": "nBTrNPA1ucoMTmSC",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $('Dados').item.json.Instancia }}",
+        "remoteJid": "={{ $('Dados').item.json['Quem mandou'] }}",
+        "messageId": "={{ $('Dados').item.json['Id message'] }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        912,
+        -256
+      ],
+      "id": "e3b36ed7-f006-4e44-848c-60329af1c755",
+      "name": "Marcar mensagens como lidas",
+      "credentials": {
+        "evolutionApi": {
+          "id": "dA1GB4AeyswoYh2m",
+          "name": "ProspeccaoAdvogados"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('Dados').item.json.Instancia }}",
+        "remoteJid": "={{ $('Dados').item.json['Quem mandou'] }}",
+        "messageText": "={{ $('AI Agent').item.json.output }}",
+        "options_message": {
+          "delay": 3000,
+          "linkPreview": true
+        }
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        -256
+      ],
+      "id": "39cb2636-3212-4d11-83f1-e52fcd33d6cc",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "dA1GB4AeyswoYh2m",
+          "name": "ProspeccaoAdvogados"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Retorna para que serve o medicamento e seu uso.",
+        "url": "https://api.fda.gov/drug/label.json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        800,
+        -64
+      ],
+      "id": "98840827-9cab-4010-b1c9-88fcc67b8512",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        496,
+        -64
+      ],
+      "id": "24c797f3-cc65-4975-81e0-ca908f1e6668",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "WzOUv6lWhrXtFBU3",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b27cfe05-a250-4ed1-96bc-052e26b05c92",
+              "name": "Quem mandou",
+              "value": "={{ $json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "42f814cb-b979-4920-a4f1-777aff4bfaff",
+              "name": "Instancia",
+              "value": "={{ $json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "241eb818-4cc3-4416-9b4f-87ae37a76ed9",
+              "name": "Nome da Pessoa",
+              "value": "={{ $json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "568c4b3a-9c4c-4691-bc9b-ca8c5c17cc3b",
+              "name": "Mensagem",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "da48528c-5610-4932-9380-4c63cf4c763d",
+              "name": "Id message",
+              "value": "={{ $json.body.data.key.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        -256
+      ],
+      "id": "d8e2ca20-7cbf-44ad-8833-be54c04ca94c",
+      "name": "Dados"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Marcar mensagens como lidas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar mensagens como lidas": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "746595ee-2c9a-4fc1-b0c2-cf84846d24f7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d70c29f543c12d2f2e0c2cfca072638450c10264b5298f417fd4a9f9d105fe10"
+  },
+  "id": "8LeZpVGPRgNR28zP",
+  "tags": []
+}
